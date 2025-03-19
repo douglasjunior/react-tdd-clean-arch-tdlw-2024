@@ -1,5 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler, useCallback, useState } from "react";
-import axios from 'axios';
+import AccountGateway from "./gateway/AccountGateway";
+import { useInject } from "./registry/RegistryProvider";
 
 function App() {
   const [form, setForm] = useState({
@@ -14,6 +15,8 @@ function App() {
     error: '',
     success: '',
   });
+
+  const accountGateway: AccountGateway = useInject('accountGateway');
 
   const calculateProgress = () => {
     let progress = 0;
@@ -132,13 +135,13 @@ function App() {
       email: form.email,
       password: form.password,
     };
-    const response = await axios.post('/signup', input);
+    const response = await accountGateway.signup(input);
     if (response.status !== 201) return;
     setForm((prevForm) => ({
       ...prevForm,
       success: 'Conta criada com sucesso',
     }));
-  }, [form.accountType, form.documentNumber, form.email, form.name, form.password, form.role, validate]);
+  }, [accountGateway, form.accountType, form.documentNumber, form.email, form.name, form.password, form.role, validate]);
 
   const fill = useCallback(() => {
     setForm({

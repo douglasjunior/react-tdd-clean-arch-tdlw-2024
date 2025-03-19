@@ -1,16 +1,28 @@
-import { describe, expect, test } from 'vitest';
-import { fireEvent, render } from '@testing-library/react';
+import { beforeEach, describe, expect, test } from 'vitest';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 
 import App from './App';
-import { createAxiosMock } from './mocks';
+import { RegistryProvider } from './registry/RegistryProvider';
+import {  AccountGatewayMock } from './gateway/AccountGateway';
 
-createAxiosMock();
+let result: RenderResult;
+beforeEach(() => {
+  const accountGateway = new AccountGatewayMock();
+
+  const registry = {
+    accountGateway
+  }
+
+  result = render(
+    <RegistryProvider value={registry}>
+      <App />
+    </RegistryProvider>
+  );
+})
 
 describe('App', () => {
 
   test('Deve testar o fluxo de progresso no preenchimento do formulário', () => {
-    const result = render(<App />);
-
     // Step 1
     expect(result.getByTestId('span-progress').textContent).toBe('0%');
     expect(result.getByTestId('span-step').textContent).toBe('1');
@@ -47,8 +59,6 @@ describe('App', () => {
   });
 
   test('Deve testar a visibilidade dos componentes do formulário', () => {
-    const result = render(<App />);
-
     // Step 1
     expect(result.queryByDisplayValue('administrator')).toBeInTheDocument();
     expect(result.queryByDisplayValue('operator')).toBeInTheDocument();
@@ -99,8 +109,6 @@ describe('App', () => {
   });
 
   test('Deve testar as validação dos campos e o controle do preenchimento no formulário', async () => {
-    const result = render(<App />);
-
     fireEvent.click(result.getByTestId('button-next'));
     expect(result.getByTestId('span-step').textContent).toBe('1');
     expect(result.getByTestId('span-error').textContent).toBe('Selecione o tipo de conta');
@@ -143,8 +151,6 @@ describe('App', () => {
   });
 
   test('Deve testar o fluxo de criação da conta integrando com o backend', async () => {
-    const result = render(<App />);
-
     fireEvent.click(result.getByDisplayValue('administrator'));
     fireEvent.click(result.getByTestId('button-next'));
     fireEvent.input(result.getByPlaceholderText('Informe seu nome'), { target: { value: 'John Doe' } });
