@@ -4,11 +4,11 @@ export default class FetchAdapter implements HttpClient {
 
   async post(url: string, data: Record<string, any>): Promise<ResponseType> {
     const response = await fetch(url, {
-      body: JSON.stringify(data),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(data),
     });
     return {
       status: response.status,
