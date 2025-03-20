@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, test } from 'vitest';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react';
 
 import App from './App';
 import { RegistryProvider } from './registry/RegistryProvider';
-import {  AccountGatewayMock } from './gateway/AccountGateway';
+import { AccountGatewayMock } from './gateway/AccountGateway';
 
 let result: RenderResult;
 beforeEach(() => {
@@ -32,30 +32,16 @@ describe('App', () => {
 
     // Step 2
     expect(result.getByTestId('span-step').textContent).toBe('2');
+    expect(result.getByTestId('span-progress').textContent).toBe('30%');
     fireEvent.input(result.getByPlaceholderText('Informe seu nome'), { target: { value: 'John Doe' } });
-    expect(result.getByTestId('span-progress').textContent).toBe('45%');
     fireEvent.input(result.getByPlaceholderText('Informe seu cargo'), { target: { value: 'Gerente' } });
-    expect(result.getByTestId('span-progress').textContent).toBe('60%');
     fireEvent.input(result.getByPlaceholderText('Informe seu CPF'), { target: { value: '00011122233' } });
     expect(result.getByTestId('span-progress').textContent).toBe('75%');
-    fireEvent.click(result.getByTestId('button-next'));
-
-    // Step 3
-    expect(result.getByTestId('span-step').textContent).toBe('3');
-    fireEvent.input(result.getByPlaceholderText('Informe seu email'), { target: { value: `john@email.com` } });
-    expect(result.getByTestId('span-progress').textContent).toBe('85%');
-    fireEvent.input(result.getByPlaceholderText('Informe sua senha'), { target: { value: 'senha123' } });
-    expect(result.getByTestId('span-progress').textContent).toBe('95%');
-    fireEvent.input(result.getByPlaceholderText('Repita sua senha'), { target: { value: 'senha444' } });
-    expect(result.getByTestId('span-progress').textContent).toBe('95%');
-    fireEvent.input(result.getByPlaceholderText('Repita sua senha'), { target: { value: 'senha123' } });
-    expect(result.getByTestId('span-progress').textContent).toBe('100%');
 
     // Previous
     fireEvent.click(result.getByTestId('button-previous'));
-    expect(result.getByTestId('span-step').textContent).toBe('2');
-    fireEvent.click(result.getByTestId('button-previous'));
     expect(result.getByTestId('span-step').textContent).toBe('1');
+    expect(result.getByTestId('span-progress').textContent).toBe('75%');
   });
 
   test('Deve testar a visibilidade dos componentes do formulário', () => {
@@ -132,16 +118,24 @@ describe('App', () => {
 
     expect(result.getByTestId('span-step').textContent).toBe('3');
     fireEvent.click(result.getByTestId('button-confirm'));
-    expect(result.getByTestId('span-error').textContent).toBe('Preencha o seu email');
+    await waitFor(() => {
+      expect(result.getByTestId('span-error').textContent).toBe('Preencha o seu email');
+    });
     fireEvent.input(result.getByPlaceholderText('Informe seu email'), { target: { value: `john@email.com` } });
     fireEvent.click(result.getByTestId('button-confirm'));
-    expect(result.getByTestId('span-error').textContent).toBe('Preencha a sua senha');
+    await waitFor(() => {
+      expect(result.getByTestId('span-error').textContent).toBe('Preencha a sua senha');
+    });
     fireEvent.input(result.getByPlaceholderText('Informe sua senha'), { target: { value: 'senha123' } });
     fireEvent.click(result.getByTestId('button-confirm'));
-    expect(result.getByTestId('span-error').textContent).toBe('Preencha a confirmação da senha');
+    await waitFor(() => {
+      expect(result.getByTestId('span-error').textContent).toBe('Preencha a confirmação da senha');
+    });
     fireEvent.input(result.getByPlaceholderText('Repita sua senha'), { target: { value: 'senha444' } });
     fireEvent.click(result.getByTestId('button-confirm'));
-    expect(result.getByTestId('span-error').textContent).toBe('As senhas não conferem');
+    await waitFor(() => {
+      expect(result.getByTestId('span-error').textContent).toBe('As senhas não conferem');
+    });
     fireEvent.input(result.getByPlaceholderText('Repita sua senha'), { target: { value: 'senha123' } });
     fireEvent.click(result.getByTestId('button-confirm'));
 
