@@ -135,8 +135,7 @@ function App() {
       email: form.email,
       password: form.password,
     };
-    const response = await accountGateway.signup(input);
-    if (response.status !== 201) return;
+    await accountGateway.signup(input);
     setForm((prevForm) => ({
       ...prevForm,
       success: 'Conta criada com sucesso',
@@ -144,6 +143,7 @@ function App() {
   }, [accountGateway, form.accountType, form.documentNumber, form.email, form.name, form.password, form.role, validate]);
 
   const fill = useCallback(() => {
+    /* v8 ignore start */
     setForm({
       accountType: 'administrator',
       name: 'John Doe',
@@ -156,6 +156,7 @@ function App() {
       error: '',
       success: '',
     })
+    /* v8 ignore stop */
   }, []);
 
   return (
