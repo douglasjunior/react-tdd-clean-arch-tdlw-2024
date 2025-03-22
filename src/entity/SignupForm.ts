@@ -1,5 +1,3 @@
-import AccountGateway from "../gateway/AccountGateway";
-
 type FormState = {
   accountType: string;
   name: string;
@@ -13,7 +11,7 @@ type FormState = {
   success: string;
 }
 
-export default class SignupForm {
+export default class SignupForm extends EventTarget {
   private state: FormState = {
     accountType: '',
     name: '',
@@ -26,8 +24,6 @@ export default class SignupForm {
     error: '',
     success: '',
   }
-
-  constructor(readonly accountGateway: AccountGateway) { }
 
   calculateProgress = () => {
     let progress = 0;
@@ -103,26 +99,9 @@ export default class SignupForm {
     this.updateForm('step', this.state.step - 1);
   };
 
-  confirm = async () => {
+  confirm = () => {
     if (!this.validate()) return;
 
-    const input = {
-      accountType: this.state.accountType,
-      name: this.state.name,
-      role: this.state.role,
-      documentNumber: this.state.documentNumber,
-      email: this.state.email,
-      password: this.state.password,
-    };
-
-    try {
-      await this.accountGateway.signup(input);
-
-      this.updateForm('success', 'Conta criada com sucesso');
-      this.updateForm('error', '');
-    } catch {
-      this.updateForm('success', '');
-      this.updateForm('error', 'Erro ao realizar o cadastro');
-    }
+    this.dispatchEvent(new Event('confirmed'));
   }
 }

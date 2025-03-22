@@ -6,7 +6,7 @@ import SignupForm from "./entity/SignupForm";
 function App() {
   const accountGateway: AccountGateway = useInject('accountGateway');
 
-  const form = useRef(new SignupForm(accountGateway));
+  const form = useRef(new SignupForm());
   const [formState, setFormState] = useState(form.current.getFormState());
 
   const updateForm: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
@@ -25,24 +25,35 @@ function App() {
   }, []);
 
   const confirm: MouseEventHandler<HTMLButtonElement> = useCallback(async () => {
-    await form.current.confirm()
+    form.current.addEventListener('confirmed', async () => {
+      const input = {
+        accountType: form.current.getFormState().accountType,
+        name: form.current.getFormState().name,
+        role: form.current.getFormState().role,
+        documentNumber: form.current.getFormState().documentNumber,
+        email: form.current.getFormState().email,
+        password: form.current.getFormState().password,
+      };
+      await accountGateway.signup(input);
+      form.current.updateForm('success', 'Conta criada com sucesso');
+      setFormState(form.current.getFormState());
+    }, { once: true })
+
+    form.current.confirm();
     setFormState(form.current.getFormState());
-  }, []);
+  }, [accountGateway]);
 
   const fill = useCallback(() => {
     /* v8 ignore start */
-    setFormState({
-      accountType: 'administrator',
-      name: 'John Doe',
-      role: 'Gerente',
-      documentNumber: '00011122233',
-      email: `john@email.com`,
-      password: 'senha123',
-      confirmPassword: 'senha123',
-      step: 3,
-      error: '',
-      success: '',
-    })
+    form.current.updateForm('accountType', 'administrator');
+    form.current.updateForm('name', 'John Doe');
+    form.current.updateForm('role', 'Gerente');
+    form.current.updateForm('documentNumber', '00011122233');
+    form.current.updateForm('email', `john@email.com`);
+    form.current.updateForm('password', 'senha123');
+    form.current.updateForm('confirmPassword', 'senha123');
+    form.current.updateForm('step', 3);
+    setFormState(form.current.getFormState());
     /* v8 ignore stop */
   }, []);
 

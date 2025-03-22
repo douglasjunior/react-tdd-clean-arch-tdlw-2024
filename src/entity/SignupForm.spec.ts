@@ -1,12 +1,10 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import SignupForm from "./SignupForm";
-import { AccountGatewayMock } from "../gateway/AccountGateway";
 
 let form: SignupForm;
 
 beforeEach(() => {
-  const accountGateway = new AccountGatewayMock();
-  form = new SignupForm(accountGateway);
+  form = new SignupForm();
 });
 
 describe("SignupForm", () => {
@@ -91,8 +89,10 @@ describe("SignupForm", () => {
     form.updateForm('password', 'senha123');
     form.updateForm('confirmPassword', 'senha124');
     form.updateForm('confirmPassword', 'senha123');
-    await form.confirm();
-    expect(form.getFormState().error).toBe('');
-    expect(form.getFormState().success).toBe('Conta criada com sucesso');
+    const callback = vi.fn();
+    form.addEventListener('confirmed', callback);
+    form.confirm();
+    expect(callback).toBeCalledTimes(1);
+    expect(callback).toBeCalledWith(new Event('confirmed'));
   });
 });
