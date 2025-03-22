@@ -47,6 +47,9 @@ export default class SignupForm extends EventTarget {
   getFormState = () => this.state;
 
   private validate = () => {
+    this.updateForm('error', '');
+    this.updateForm('success', '');
+
     if (this.state.step === 1 && !this.state.accountType) {
       this.updateForm('error', 'Selecione o tipo de conta');
       return false;
@@ -86,7 +89,6 @@ export default class SignupForm extends EventTarget {
       }
     }
 
-    this.updateForm('error', '');
     return true;
   };
 
