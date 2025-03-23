@@ -1,7 +1,7 @@
 import HttpClient from "../http/HttpClient";
 
 export default interface AccountGateway {
-  signup(input: Input): Promise<Output>
+  signup(input: Input): Promise<number>
 }
 
 type Input = {
@@ -13,26 +13,18 @@ type Input = {
   password: string,
 }
 
-type Output = {
-  status: number
-}
-
 export class AccountGatewayHttp implements AccountGateway {
   constructor(readonly httpClient: HttpClient) {}
 
-  async signup(input: Input): Promise<Output> {
+  async signup(input: Input): Promise<number> {
     const response = await this.httpClient.post('https://jsonplaceholder.typicode.com/users', input);
     
-    return {
-      status: response.status,
-    }
+    return response.data.id;
   }
 }
 
 export class AccountGatewayMock implements AccountGateway {
-  async signup(): Promise<Output> {
-    return {
-      status: 201,
-    }
+  async signup(): Promise<number> {
+    return 11;
   }
 }

@@ -140,7 +140,7 @@ describe('App', () => {
     fireEvent.click(result.getByTestId('button-confirm'));
 
     const success = await result.findByTestId('span-success');
-    expect(success.textContent).toBe('Conta criada com sucesso');
+    expect(success.textContent).toMatch(/Conta criada com sucesso: #\d+/);
     expect(success).toBeInTheDocument();
   });
 
@@ -157,7 +157,7 @@ describe('App', () => {
     fireEvent.click(result.getByTestId('button-confirm'));
 
     const success = await result.findByTestId('span-success');
-    expect(success.textContent).toBe('Conta criada com sucesso');
+    expect(success.textContent).toMatch(/Conta criada com sucesso: #\d+/);
     expect(success).toBeInTheDocument();
   });
 });

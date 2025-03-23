@@ -7,3 +7,12 @@ export type ResponseType = {
   status: number
   data: Record<string, any>
 }
+
+export class HttpClientMock implements HttpClient {
+  async post(): Promise<ResponseType> {
+    return {
+      status: 201,
+      data: { id: 1 },
+    }
+  }
+}

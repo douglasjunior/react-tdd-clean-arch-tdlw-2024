@@ -47,7 +47,7 @@ describe("SignupForm", () => {
     expect(form.getFormState().step).toBe(1);
   });
 
-  test('Deve testar as validação dos campos e o controle do preenchimento no formulário', async () => {
+  test('Deve testar as validação dos campos e o controle do preenchimento no formulário', () => {
     form.next();
     expect(form.getFormState().error).toBe('Selecione o tipo de conta');
     form.updateForm('accountType', 'administrator');
@@ -64,23 +64,23 @@ describe("SignupForm", () => {
     form.updateForm('documentNumber', '00011122233');
     form.next();
     expect(form.getFormState().error).toBe('');
-    await form.confirm();
+    form.confirm();
     expect(form.getFormState().error).toBe('Preencha o seu email');
     form.updateForm('email', 'john@email.com');
-    await form.confirm();
+    form.confirm();
     expect(form.getFormState().error).toBe('Preencha a sua senha');
     form.updateForm('password', 'senha123');
-    await form.confirm();
+    form.confirm();
     expect(form.getFormState().error).toBe('Preencha a confirmação da senha');
     form.updateForm('confirmPassword', 'senha124');
-    await form.confirm();
+    form.confirm();
     expect(form.getFormState().error).toBe('As senhas não conferem');
     form.updateForm('confirmPassword', 'senha123');
-    await form.confirm();
+    form.confirm();
     expect(form.getFormState().error).toBe('');
   })
 
-  test('Deve testar o fluxo de criação da conta integrando com o backend', async () => {
+  test('Deve testar o fluxo de criação da conta integrando com o backend', () => {
     form.updateForm('accountType', 'administrator');
     form.updateForm('name', 'John Doe');
     form.updateForm('role', 'Gerente');

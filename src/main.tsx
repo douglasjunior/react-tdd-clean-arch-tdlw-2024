@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'

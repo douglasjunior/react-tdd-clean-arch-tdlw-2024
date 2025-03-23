@@ -34,8 +34,8 @@ function App() {
         email: form.current.getFormState().email,
         password: form.current.getFormState().password,
       };
-      await accountGateway.signup(input);
-      form.current.updateForm('success', 'Conta criada com sucesso');
+      const id = await accountGateway.signup(input);
+      form.current.updateForm('success', 'Conta criada com sucesso: #' + id);
       setFormState(form.current.getFormState());
     }, { once: true })
 
@@ -43,24 +43,10 @@ function App() {
     setFormState(form.current.getFormState());
   }, [accountGateway]);
 
-  const fill = useCallback(() => {
-    /* v8 ignore start */
-    form.current.updateForm('accountType', 'administrator');
-    form.current.updateForm('name', 'John Doe');
-    form.current.updateForm('role', 'Gerente');
-    form.current.updateForm('documentNumber', '00011122233');
-    form.current.updateForm('email', `john@email.com`);
-    form.current.updateForm('password', 'senha123');
-    form.current.updateForm('confirmPassword', 'senha123');
-    form.current.updateForm('step', 3);
-    setFormState(form.current.getFormState());
-    /* v8 ignore stop */
-  }, []);
-
   return (
     <div>
       <div>
-        <span onClick={fill}>Passo: </span>
+        <span>Passo: </span>
         <span data-testid="span-step">{formState.step}</span>
       </div>
       <div>

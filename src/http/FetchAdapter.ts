@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import HttpClient, { ResponseType } from "./HttpClient";
 
 export default class FetchAdapter implements HttpClient {
