@@ -1,54 +1,21 @@
-# React + TypeScript + Vite
+# 2025 - TDD e Clean Architecture no frontend com React 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Visão geral
 
-Currently, two official plugins are available:
+1. Crie um frontend para fazer uma criação de contas em 3 etapas.
+1. Escolha do tipo de conta: Administrador, Editor ou Operador
+1. Dados da conta: Nome, CPF e cargo
+1. Dados de acesso: Email, senha e confirmação de senha
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Requisitos
 
-## Expanding the ESLint configuration
+- Exibir mensagem de validação caso algum campo obrigatório não esteja preenchido
+- Impedir navegação para o próximo passo se o passo anterior não estiver válido
+- Exibir em que passo o usuário está (ex. 1, 2 ou 3) e o percentual de progresso
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Branches de referência
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- Branch limpa: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/start
+- Aplicação crua: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/raw
+- Isolamento de framework and drivers: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/frameworks-and-drivers
+- Desacoplamento entre use case e entity: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/master
