@@ -13,8 +13,9 @@
 - Impedir navegação para o próximo passo se o passo anterior não estiver válido
 - Exibir em que passo o usuário está (ex. 1, 2 ou 3) e o percentual de progresso
 
-## Repositório de referência
+## Branches de referência
 
-- Aplicação crua: https://github.com/douglasjunior/react-tdd-clean-arch/tree/raw
-- Isolamento de framework and drivers: https://github.com/douglasjunior/react-tdd-clean-arch/tree/frameworks-and-drivers
-- Desacoplamento entre use case e entity: https://github.com/douglasjunior/react-tdd-clean-arch/tree/master
+- Branch limpa: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/start
+- Aplicação crua: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/raw
+- Isolamento de framework and drivers: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/frameworks-and-drivers
+- Desacoplamento entre use case e entity: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/master
