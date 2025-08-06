@@ -15,10 +15,10 @@
 
 ## Branches de referência
 
-- Branch limpa: https://github.com/douglasjunior/react-tdd-clean-arch/tree/start
-- Aplicação crua: https://github.com/douglasjunior/react-tdd-clean-arch/tree/raw
-- Isolamento de framework and drivers: https://github.com/douglasjunior/react-tdd-clean-arch/tree/frameworks-and-drivers
-- Desacoplamento entre use case e entity: https://github.com/douglasjunior/react-tdd-clean-arch/tree/master
+- Branch limpa: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/start
+- Aplicação crua: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/raw
+- Isolamento de framework and drivers: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/frameworks-and-drivers
+- Desacoplamento entre use case e entity: https://github.com/douglasjunior/react-tdd-clean-arch-tdlw-2025/tree/master
 
 ## Cobertura de testes
 
